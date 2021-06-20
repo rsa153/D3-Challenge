@@ -51,13 +51,13 @@ function scale(data, xAxis) {
     return xAxis1;
   }
 
-  function createCircles(circlesGroup, newXScale, xAxis) {
+  function createCircles(circleGroup, newXScale, xAxis) {
 
-    circlesGroup.transition()
+    circleGroup.transition()
       .duration(1000)
       .attr("cx", d => newXScale(d[xAxis]));
   
-    return circlesGroup;
+    return circleGroup;
   }
 
   function createText(textGroup, newXScale, xAxis) {
@@ -68,3 +68,35 @@ function scale(data, xAxis) {
   
     return textGroup;
   }
+
+  function utoolTip(xAxis, circleGroup) {
+
+    var label;
+  
+    if (xAxis === "age") {
+      label = "Age:";
+    }
+    else {
+      label = "Income:";
+    }
+  
+    var toolTip = d3.tip()
+      .attr("class", "d3-tip")
+      .offset([0, 0]) 
+      .html(function(d) {
+        return (`${d.state}<br>${d[xAxis]}%`);
+      });
+  
+    circleGroup.call(toolTip);
+  
+    circleGroup.on("mouseover", function(data) {
+      toolTip.show(data, this);
+    })
+    
+      .on("mouseout", function(data) {
+        toolTip.hide(data, this);
+      });
+  
+    return circleGroup;
+  }
+  
