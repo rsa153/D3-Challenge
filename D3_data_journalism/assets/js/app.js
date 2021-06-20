@@ -60,13 +60,13 @@ function createCircles(circleGroup, newXScale, xAxis) {
     return circleGroup;
 }
 
-function createText(textGroup, newXScale, xAxis) {
+function createText(text, newXScale, xAxis) {
 
-    textGroup.transition()
+    text.transition()
         .duration(1000)
         .attr("x", d => newXScale(d[xAxis]));
 
-    return textGroup;
+    return text;
 }
 
 function utoolTip(xAxis, circleGroup) {
@@ -169,4 +169,30 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .attr("dy", "1em")
         .classed("aText", true)
         .text("Smokes (%)");
+
+    var circleGroup = uToolTip(xAxis, circleGroup);
+
+    labels.selectAll("text")
+    .on("click", function() {
+      
+      var value = d3.select(this).attr("value");
+      if (value !== xAxis) {
+
+        xAxis = value;
+
+        xLinearScale = xScale(data, xAxis);
+
+        xAxis = createAxes(xLinearScale, xAxis);
+
+        circleGroup = createCircles(circleGroup, xLinearScale, xAxis);
+
+        circleGroup = uToolTip(xAxis, circleGroup);
+
+        text = createText(text, xLinearScale, xAxis);
+        text = uToolTip(xAxis, text);
+
+      }
+    });
+}).catch(function(error) {
+  console.log(error);
 });
