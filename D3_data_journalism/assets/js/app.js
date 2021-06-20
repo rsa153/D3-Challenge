@@ -120,12 +120,29 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-  var xAxis = chartGroup.append("g")
+  var xAxis = chart.append("g")
     .classed("x-axis", true)
     .attr("transform", `translate(0, ${height})`)
     .call(bottomAxis);
 
     chart.append("g").call(leftAxis);
 
+    var circleGroup = chart.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("class", "stateCircle")
+    .attr("cx", d => xLinearScale(d[xAxis]))
+    .attr("cy", d => yLinearScale(d.smokes))
+    .attr("r", 20);
+
+    var textGroup = chart.selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "stateText")
+    .attr("x", d => xLinearScale(d[cxAxis]))
+    .attr("y", d => yLinearScale(d.smokes))
+    .text(function(d) { return d.abbr;});
 
 });
