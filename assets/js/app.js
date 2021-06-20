@@ -117,13 +117,13 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .domain([0, d3.max(data, d => d.smokes)])
         .range([height, 0]);
 
-    var bottomAxis = d3.axisBottom(xScale);
+    var axisBottom = d3.axisBottom(xScale);
     var leftAxis = d3.axisLeft(yScale);
 
     var xAxis1 = chart.append("g")
         .classed("x-axis", true)
         .attr("transform", `translate(0, ${height})`)
-        .call(bottomAxis);
+        .call(axisBottom);
 
     chart.append("g").call(leftAxis);
 
