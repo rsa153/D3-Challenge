@@ -108,4 +108,24 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         data.income = +data.income;
         data.smokes = +data.smokes;
     });
+
+// create axis functions and append axis
+
+  var xLinearScale = xScale(data, xAxis);
+
+  var yLinearScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.smokes)])
+    .range([height, 0]);
+
+  var bottomAxis = d3.axisBottom(xLinearScale);
+  var leftAxis = d3.axisLeft(yLinearScale);
+
+  var xAxis = chartGroup.append("g")
+    .classed("x-axis", true)
+    .attr("transform", `translate(0, ${height})`)
+    .call(bottomAxis);
+
+    chart.append("g").call(leftAxis);
+
+
 });
