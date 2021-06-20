@@ -109,47 +109,64 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         data.smokes = +data.smokes;
     });
 
-// create axis functions and append axis
+    // create axis functions and append axis
 
-  var xLinearScale = xScale(data, xAxis);
+    var xLinearScale = xScale(data, xAxis);
 
-  var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.smokes)])
-    .range([height, 0]);
+    var yLinearScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.smokes)])
+        .range([height, 0]);
 
-  var bottomAxis = d3.axisBottom(xLinearScale);
-  var leftAxis = d3.axisLeft(yLinearScale);
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
 
-  var xAxis = chart.append("g")
-    .classed("x-axis", true)
-    .attr("transform", `translate(0, ${height})`)
-    .call(bottomAxis);
+    var xAxis = chart.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
 
     chart.append("g").call(leftAxis);
 
     var circleGroup = chart.selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("class", "stateCircle")
-    .attr("cx", d => xLinearScale(d[xAxis]))
-    .attr("cy", d => yLinearScale(d.smokes))
-    .attr("r", 20);
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "stateCircle")
+        .attr("cx", d => xLinearScale(d[xAxis]))
+        .attr("cy", d => yLinearScale(d.smokes))
+        .attr("r", 20);
 
-    var textGroup = chart.selectAll("text")
-    .data(data)
-    .enter()
-    .append("text")
-    .attr("class", "stateText")
-    .attr("x", d => xLinearScale(d[cxAxis]))
-    .attr("y", d => yLinearScale(d.smokes))
-    .text(function(d) { return d.abbr;});
+    var text = chart.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class", "stateText")
+        .attr("x", d => xLinearScale(d[cxAxis]))
+        .attr("y", d => yLinearScale(d.smokes))
+        .text(function (d) { return d.abbr; });
+
+    var labels = chart.append("g")
+        .attr("transform", `translate(${width / 2}, ${height + 20})`);
+
+    var age = labels.append("text")
+        .attr("x", 0)
+        .attr("y", 20)
+        .attr("value", "age") // value to grab for event listener
+        .classed("active", true)
+        .text("Average Age (Years)");
+
+    var income = labels.append("text")
+        .attr("x", 0)
+        .attr("y", 40)
+        .attr("value", "income") // value to grab for event listener
+        .classed("inactive", true)
+        .text("Average Income ($)");
 
     chart.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left)
-    .attr("x", 0 - (height / 2))
-    .attr("dy", "1em")
-    .classed("aText", true)
-    .text("Smokes (%)");
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .classed("aText", true)
+        .text("Smokes (%)");
 });
