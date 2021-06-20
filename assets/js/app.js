@@ -69,7 +69,7 @@ function createText(text, newXScale, xAxis) {
     return text;
 }
 
-function utoolTip(xAxis, circleGroup) {
+function uToolTip(xAxis, circleGroup) {
 
     var label;
 
