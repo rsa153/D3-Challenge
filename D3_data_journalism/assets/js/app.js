@@ -41,7 +41,7 @@ function scale(data, xAxis) {
   
   }
 
-  function renderAxes(newXScale, xAxis1) {
+  function createAxes(newXScale, xAxis1) {
     var axisBottom = d3.axisBottom(newXScale);
   
     xAxis1.transition()
@@ -49,4 +49,13 @@ function scale(data, xAxis) {
       .call(axisBottom);
   
     return xAxis1;
+  }
+
+  function createCircles(circlesGroup, newXScale, xAxis) {
+
+    circlesGroup.transition()
+      .duration(1000)
+      .attr("cx", d => newXScale(d[xAxis]));
+  
+    return circlesGroup;
   }
