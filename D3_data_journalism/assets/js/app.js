@@ -28,3 +28,15 @@ var chart = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 var xAxis = "age";
+
+function scale(data, xAxis) {
+    
+    var xScale = d3.scaleLinear()
+      .domain([d3.min(data, d => d[xAxis]) * 0.8,
+        d3.max(data, d => d[xAxis]) * 1.2
+      ])
+      .range([0, width]);
+  
+    return xScale;
+  
+  }
