@@ -40,3 +40,13 @@ function scale(data, xAxis) {
     return xScale;
   
   }
+
+  function renderAxes(newXScale, xAxis1) {
+    var axisBottom = d3.axisBottom(newXScale);
+  
+    xAxis1.transition()
+      .duration(1000)
+      .call(axisBottom);
+  
+    return xAxis1;
+  }
