@@ -145,4 +145,11 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
     .attr("y", d => yLinearScale(d.smokes))
     .text(function(d) { return d.abbr;});
 
+    chart.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .classed("aText", true)
+    .text("Smokes (%)");
 });
