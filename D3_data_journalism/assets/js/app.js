@@ -120,7 +120,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
     var bottomAxis = d3.axisBottom(xScale);
     var leftAxis = d3.axisLeft(yScale);
 
-    var xAxis = chart.append("g")
+    var xAxis1 = chart.append("g")
         .classed("x-axis", true)
         .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
@@ -182,7 +182,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
 
         xScale = scale(data, xAxis);
 
-        xAxis = createAxes(xScale, xAxis);
+        xAxis1 = createAxes(xScale, xAxis1);
 
         circleGroup = createCircles(circleGroup, xScale, xAxis);
 
