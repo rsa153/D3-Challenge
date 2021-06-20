@@ -7,8 +7,8 @@ var svgHeight = 500;
 
 // set margins
 var margin = {
-    top: 20,
-    right: 40,
+    top: 30,
+    right: 50,
     bottom: 80,
     left: 100
 };
@@ -19,7 +19,7 @@ var height = svgHeight - margin.top - margin.bottom;
 // create svg wrapper
 
 var svg = d3
-    .select(".chart")
+    .select("#chart")
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
