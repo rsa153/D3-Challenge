@@ -59,3 +59,12 @@ function scale(data, xAxis) {
   
     return circlesGroup;
   }
+
+  function createText(textGroup, newXScale, xAxis) {
+
+    textGroup.transition()
+      .duration(1000)
+      .attr("x", d => newXScale(d[xAxis]));
+  
+    return textGroup;
+  }
