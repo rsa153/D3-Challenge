@@ -30,73 +30,82 @@ var chart = svg.append("g")
 var xAxis = "age";
 
 function scale(data, xAxis) {
-    
+
     var xScale = d3.scaleLinear()
-      .domain([d3.min(data, d => d[xAxis]) * 0.8,
+        .domain([d3.min(data, d => d[xAxis]) * 0.8,
         d3.max(data, d => d[xAxis]) * 1.2
-      ])
-      .range([0, width]);
-  
+        ])
+        .range([0, width]);
+
     return xScale;
-  
-  }
 
-  function createAxes(newXScale, xAxis1) {
+}
+
+function createAxes(newXScale, xAxis1) {
     var axisBottom = d3.axisBottom(newXScale);
-  
-    xAxis1.transition()
-      .duration(1000)
-      .call(axisBottom);
-  
-    return xAxis1;
-  }
 
-  function createCircles(circleGroup, newXScale, xAxis) {
+    xAxis1.transition()
+        .duration(1000)
+        .call(axisBottom);
+
+    return xAxis1;
+}
+
+function createCircles(circleGroup, newXScale, xAxis) {
 
     circleGroup.transition()
-      .duration(1000)
-      .attr("cx", d => newXScale(d[xAxis]));
-  
-    return circleGroup;
-  }
+        .duration(1000)
+        .attr("cx", d => newXScale(d[xAxis]));
 
-  function createText(textGroup, newXScale, xAxis) {
+    return circleGroup;
+}
+
+function createText(textGroup, newXScale, xAxis) {
 
     textGroup.transition()
-      .duration(1000)
-      .attr("x", d => newXScale(d[xAxis]));
-  
-    return textGroup;
-  }
+        .duration(1000)
+        .attr("x", d => newXScale(d[xAxis]));
 
-  function utoolTip(xAxis, circleGroup) {
+    return textGroup;
+}
+
+function utoolTip(xAxis, circleGroup) {
 
     var label;
-  
+
     if (xAxis === "age") {
-      label = "Age:";
+        label = "Age:";
     }
     else {
-      label = "Income:";
+        label = "Income:";
     }
-  
+
     var toolTip = d3.tip()
-      .attr("class", "d3-tip")
-      .offset([0, 0]) 
-      .html(function(d) {
-        return (`${d.state}<br>${d[xAxis]}%`);
-      });
-  
+        .attr("class", "d3-tip")
+        .offset([0, 0])
+        .html(function (d) {
+            return (`${d.state}<br>${d[xAxis]}%`);
+        });
+
     circleGroup.call(toolTip);
-  
-    circleGroup.on("mouseover", function(data) {
-      toolTip.show(data, this);
+
+    circleGroup.on("mouseover", function (data) {
+        toolTip.show(data, this);
     })
-    
-      .on("mouseout", function(data) {
-        toolTip.hide(data, this);
-      });
-  
+
+        .on("mouseout", function (data) {
+            toolTip.hide(data, this);
+        });
+
     return circleGroup;
-  }
-  
+}
+
+d3.csv("assets/data/data.csv").then(function (data, err) {
+    if (err) throw err;
+
+    data.forEach(function (data) {
+        data.age = +data.age;
+        data.income = +data.income;
+        data.smokes = +data.smokes;
+    });
+});
