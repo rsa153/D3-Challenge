@@ -191,6 +191,22 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         text = createText(text, xScale, xAxis);
         text = uToolTip(xAxis, text);
 
+        if (xAxis === "income") {
+            income
+              .classed("active", true)
+              .classed("inactive", false);
+            age
+              .classed("active", false)
+              .classed("inactive", true);
+          }
+          else {
+            income
+              .classed("active", false)
+              .classed("inactive", true);
+            age
+              .classed("active", true)
+              .classed("inactive", false);
+          }
       }
     });
 }).catch(function(error) {
