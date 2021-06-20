@@ -111,14 +111,14 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
 
     // create axis functions and append axis
 
-    var xLinearScale = xScale(data, xAxis);
+    var xScale = scale(data, xAxis);
 
-    var yLinearScale = d3.scaleLinear()
+    var yScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.smokes)])
         .range([height, 0]);
 
-    var bottomAxis = d3.axisBottom(xLinearScale);
-    var leftAxis = d3.axisLeft(yLinearScale);
+    var bottomAxis = d3.axisBottom(xScale);
+    var leftAxis = d3.axisLeft(yScale);
 
     var xAxis = chart.append("g")
         .classed("x-axis", true)
@@ -132,8 +132,8 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .enter()
         .append("circle")
         .attr("class", "stateCircle")
-        .attr("cx", d => xLinearScale(d[xAxis]))
-        .attr("cy", d => yLinearScale(d.smokes))
+        .attr("cx", d => xScale(d[xAxis]))
+        .attr("cy", d => yScale(d.smokes))
         .attr("r", 20);
 
     var text = chart.selectAll("text")
@@ -141,8 +141,8 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .enter()
         .append("text")
         .attr("class", "stateText")
-        .attr("x", d => xLinearScale(d[cxAxis]))
-        .attr("y", d => yLinearScale(d.smokes))
+        .attr("x", d => xScale(d[xAxis]))
+        .attr("y", d => yScale(d.smokes))
         .text(function (d) { return d.abbr; });
 
     var labels = chart.append("g")
@@ -180,15 +180,15 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
 
         xAxis = value;
 
-        xLinearScale = xScale(data, xAxis);
+        xScale = scale(data, xAxis);
 
-        xAxis = createAxes(xLinearScale, xAxis);
+        xAxis = createAxes(xScale, xAxis);
 
-        circleGroup = createCircles(circleGroup, xLinearScale, xAxis);
+        circleGroup = createCircles(circleGroup, xScale, xAxis);
 
         circleGroup = uToolTip(xAxis, circleGroup);
 
-        text = createText(text, xLinearScale, xAxis);
+        text = createText(text, xScale, xAxis);
         text = uToolTip(xAxis, text);
 
       }
